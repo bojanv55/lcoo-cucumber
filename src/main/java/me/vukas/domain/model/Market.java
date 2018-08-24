@@ -1,4 +1,4 @@
 package me.vukas.domain.model;
 
-public interface Line {
+public class Market {
 }
