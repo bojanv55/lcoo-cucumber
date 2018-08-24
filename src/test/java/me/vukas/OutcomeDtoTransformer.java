@@ -7,7 +7,7 @@ import cucumber.api.TypeRegistry;
 import cucumber.api.TypeRegistryConfigurer;
 import io.cucumber.datatable.DataTableType;
 
-public class ImportedOutcomeTransformer implements TypeRegistryConfigurer {
+public class OutcomeDtoTransformer implements TypeRegistryConfigurer {
 	@Override
 	public Locale locale() {
 		return Locale.ENGLISH;
@@ -15,12 +15,12 @@ public class ImportedOutcomeTransformer implements TypeRegistryConfigurer {
 
 	@Override
 	public void configureTypeRegistry(TypeRegistry typeRegistry) {
-		typeRegistry.defineDataTableType(new DataTableType(ImportedOutcome.class,
+		typeRegistry.defineDataTableType(new DataTableType(OutcomeDto.class,
 				(Map<String, String> row) -> {
-					ImportedOutcome importedOutcome = new ImportedOutcome();
-					importedOutcome.outcome = row.get("outcome");
-					importedOutcome.probability = Double.parseDouble(row.get("probability"));
-					return importedOutcome;
+					OutcomeDto outcomeDto = new OutcomeDto();
+					outcomeDto.outcome = row.get("outcome");
+					outcomeDto.value = Double.parseDouble(row.get("value"));
+					return outcomeDto;
 				}));
 	}
 }

@@ -2,71 +2,106 @@ package me.vukas;
 
 import java.util.List;
 
-import cucumber.api.java.en.And;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import me.vukas.application.dto.MarketDto;
-import me.vukas.application.dto.MarketLineDto;
-import me.vukas.application.dto.OutcomeDto;
+import io.cucumber.datatable.DataTable;
 
 public class MarketStepDef {
-
-	private MarketDto marketDto;
-
-	@Given("we receive single line market with identifier {string}")
-	public void weReceiveSingleLineMarketWithIdentifier(String marketIdentifier) {
-		marketDto = new MarketDto();
-		marketDto.setId(Integer.parseInt(marketIdentifier));
+	@Given("we have single line market with identifier {string}")
+	public void we_have_single_line_market_with_identifier(String marketIdentifier) {
+		// Write code here that turns the phrase above into concrete actions
+		throw new PendingException();
 	}
 
-	@And("we receive probabilities for outcomes for that market")
-	public void weReceiveProbabilitiesForOutcomesForThatMarket(List<ImportedOutcome> importedOutcomes) {
-		MarketLineDto marketLineDto = new MarketLineDto();
-		copyOutcomesToDto(importedOutcomes, marketLineDto);
-		marketDto.getMarketLines().put("", marketLineDto);
+	@Given("we have following odds for outcomes for that market")
+	public void we_have_following_odds_for_outcomes_for_that_market(List<OutcomeDto> outcomes) {
+		// Write code here that turns the phrase above into concrete actions
+		// For automatic transformation, change DataTable to one of
+		// List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+		// Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+		// Double, Byte Short, Long, BigInteger or BigDecimal.
+		//
+		// For other transformations you can register a DataTableType.
+		throw new PendingException();
 	}
 
-	@When("we copy all data from received single line DTO to domain object")
-	public void weCopyAllDataFromReceivedSingleLineDTOToDomainObject() {
-
+	@When("we adjust key value to {string}")
+	public void we_adjust_key_value_to(String keyValue) {
+		// Write code here that turns the phrase above into concrete actions
+		throw new PendingException();
 	}
 
-	@Then("domain object should have all matching data from received single line DTO")
-	public void domainObjectShouldHaveAllMatchingDataFromReceivedSingleLineDTO() {
-
+	@Then("all odds should update to following values")
+	public void all_odds_should_update_to_following_values(List<OutcomeDto> outcomes) {
+		// Write code here that turns the phrase above into concrete actions
+		// For automatic transformation, change DataTable to one of
+		// List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+		// Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+		// Double, Byte Short, Long, BigInteger or BigDecimal.
+		//
+		// For other transformations you can register a DataTableType.
+		throw new PendingException();
 	}
 
-	@Given("we receive multi line market with identifier {string}")
-	public void weReceiveMultiLineMarketWithIdentifier(String marketIdentifier) throws Throwable {
-		marketDto = new MarketDto();
-		marketDto.setId(Integer.parseInt(marketIdentifier));
+	@Given("we have multi line market with identifier {string}")
+	public void we_have_multi_line_market_with_identifier(String marketIdentifier) {
+		// Write code here that turns the phrase above into concrete actions
+		throw new PendingException();
 	}
 
-	@And("we receive probabilities for outcomes for that market for typeKey {string}")
-	public void weReceiveProbabilitiesForOutcomesForThatMarketForTypeKey(String typeKey, List<ImportedOutcome> importedOutcomes) throws Throwable {
-		MarketLineDto marketLineDto = new MarketLineDto();
-		marketLineDto.setTypeKey(typeKey);
-		copyOutcomesToDto(importedOutcomes, marketLineDto);
-		marketDto.getMarketLines().put(typeKey, marketLineDto);
+	@Given("we have following odds for outcomes for typeKey {string} for that market")
+	public void we_have_following_odds_for_outcomes_for_typeKey_for_that_market(String typeKey, List<OutcomeDto> outcomes) {
+		// Write code here that turns the phrase above into concrete actions
+		// For automatic transformation, change DataTable to one of
+		// List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+		// Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+		// Double, Byte Short, Long, BigInteger or BigDecimal.
+		//
+		// For other transformations you can register a DataTableType.
+		throw new PendingException();
 	}
 
-	@When("we copy all data from received multi line DTO to domain object")
-	public void weCopyAllDataFromReceivedMultiLineDTOToDomainObject() {
-
+	@When("we adjust key value to {string} for typeKey {string} in that market")
+	public void we_adjust_key_value_to_for_typeKey_in_that_market(String keyValue, String typeKey) {
+		// Write code here that turns the phrase above into concrete actions
+		throw new PendingException();
 	}
 
-	@Then("domain object should have all matching data from received multi line DTO")
-	public void domainObjectShouldHaveAllMatchingDataFromReceivedMultiLineDTO() {
-
+	@Then("odds for typeKey {string} should be adjusted to following values")
+	public void odds_for_typeKey_should_be_adjusted_to_following_values(String typeKey, List<OutcomeDto> outcomes) {
+		// Write code here that turns the phrase above into concrete actions
+		// For automatic transformation, change DataTable to one of
+		// List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+		// Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+		// Double, Byte Short, Long, BigInteger or BigDecimal.
+		//
+		// For other transformations you can register a DataTableType.
+		throw new PendingException();
 	}
 
-	private void copyOutcomesToDto(List<ImportedOutcome> importedOutcomes, MarketLineDto marketLineDto) {
-		for(ImportedOutcome io : importedOutcomes){
-			OutcomeDto outcomeDto = new OutcomeDto();
-			outcomeDto.setId(1);
-			outcomeDto.setValue(io.probability);
-			marketLineDto.getProbabilities().add(outcomeDto);
-		}
+	@Then("odds for other typeKey should be unchanged")
+	public void odds_for_other_typeKey_should_be_unchanged() {
+		// Write code here that turns the phrase above into concrete actions
+		throw new PendingException();
+	}
+
+	@When("we change {string} outcome value to {double}")
+	public void we_change_outcome_value_to(String outcome, Double value) {
+		// Write code here that turns the phrase above into concrete actions
+		throw new PendingException();
+	}
+
+	@Then("other two outcomes should be adjusted to following values")
+	public void other_two_outcomes_should_be_adjusted_to_following_values(List<OutcomeDto> outcomes) {
+		// Write code here that turns the phrase above into concrete actions
+		// For automatic transformation, change DataTable to one of
+		// List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+		// Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+		// Double, Byte Short, Long, BigInteger or BigDecimal.
+		//
+		// For other transformations you can register a DataTableType.
+		throw new PendingException();
 	}
 }
