@@ -11,10 +11,10 @@ Feature: Key control
       | AWAY    | 7.55  |
     When we adjust key value to "125"
     Then all odds should update to following values
-      | outcome | value |
-      | HOME    | 2.00  |
-      | DRAW    | 4.00  |
-      | AWAY    | 8.00  |
+      | outcome | value   |
+      | HOME    | 137.5   |
+      | DRAW    | 280.0   |
+      | AWAY    | 943.75  |
 
   Scenario: Adjust key for one typeKey in multi line market
     Given we have multi line market with identifier "161"
