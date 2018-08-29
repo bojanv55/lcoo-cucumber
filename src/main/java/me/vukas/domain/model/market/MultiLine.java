@@ -21,12 +21,23 @@ public class MultiLine <T extends LineId> implements Line<T> {
 	}
 
 	@Override
-	public Map<LineId[], Set<Outcome>> getOutcomes() {
-		return null;
+	public Map<TypeKeysSpecifier, Set<Outcome>> getOutcomes() {
+		Map<TypeKeysSpecifier, Set<Outcome>> lineIdsToOutcomes = new HashMap<>();
+		for(Line<? extends TypeKey> line : typeKeyedLines.values()){
+			TypeKey subLineTypeKey = line.getLineId();
+			Map<TypeKeysSpecifier, Set<Outcome>> subLineOutcomesWithSpecifiers = line.getOutcomes();
+			for(Map.Entry<TypeKeysSpecifier, Set<Outcome>> outcomesWithSpecifier : subLineOutcomesWithSpecifiers.entrySet()){
+				TypeKeysSpecifier subLineSpecifier = outcomesWithSpecifier.getKey();
+				Set<Outcome> subLineOutcomes = outcomesWithSpecifier.getValue();
+				TypeKeysSpecifier prependedSpecifier = subLineSpecifier.withPrefix(subLineTypeKey);
+				lineIdsToOutcomes.put(prependedSpecifier, subLineOutcomes);
+			}
+		}
+		return lineIdsToOutcomes;
 	}
 
 	@Override
-	public Line<T> withKeyFor(Key newKey, TypeKey... typeKeySpecifier) {
+	public Line<T> withKeyFor(Key newKey, TypeKeysSpecifier specifier) {
 		return null;
 	}
 

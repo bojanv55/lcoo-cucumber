@@ -3,8 +3,8 @@ Feature: Key control
   We must have option to adjust key for complete market and that should change odds accordingly
 
   Scenario: Adjust key for single line market
-    Given we have single line market with identifier "591"
-    And we have following odds for outcomes for that market
+    Given single line market with identifier "591"
+    And following odds for outcomes for that market
       | outcome | value |
       | HOME    | 1.10  |
       | DRAW    | 2.24  |
@@ -17,12 +17,12 @@ Feature: Key control
       | AWAY    | 943.75  |
 
   Scenario: Adjust key for one typeKey in multi line market
-    Given we have multi line market with identifier "161"
-    And we have following odds for outcomes for typeKey "0.5" for that market
+    Given multi line market with identifier "161"
+    And following odds for outcomes for typeKey "0.5" for that market
       | outcome | value |
       | OVER    | 1.10  |
       | UNDER   | 2.24  |
-    And we have following odds for outcomes for typeKey "1.5" for that market
+    And following odds for outcomes for typeKey "1.5" for that market
       | outcome | value |
       | OVER    | 1.10  |
       | UNDER   | 2.24  |

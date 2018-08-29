@@ -16,6 +16,8 @@ import me.vukas.domain.model.market.Line;
 import me.vukas.domain.model.market.MarketId;
 import me.vukas.domain.model.market.MultiLine;
 import me.vukas.domain.model.market.SingleLine;
+import me.vukas.domain.model.market.TypeKey;
+import me.vukas.domain.model.market.TypeKeysSpecifier;
 import me.vukas.domain.model.market.outcome.DefaultOutcomeId;
 import me.vukas.domain.model.market.outcome.Odds;
 import me.vukas.domain.model.market.outcome.Outcome;
@@ -26,12 +28,12 @@ public class MarketStepDef {
 	private MultiLine.Builder<MarketId> multiLineBuilder;
 	private Line<MarketId> market;
 
-	@Given("we have single line market with identifier {string}")
+	@Given("single line market with identifier {string}")
 	public void we_have_single_line_market_with_identifier(String marketIdentifier) {
 		singleLineBuilder = new SingleLine.Builder<>(MarketId.of(marketIdentifier));
 	}
 
-	@And("we have following odds for outcomes for that market")
+	@And("following odds for outcomes for that market")
 	public void we_have_following_odds_for_outcomes_for_that_market(List<OutcomeDto> outcomes) {
 		for(OutcomeDto outcome : outcomes){
 			singleLineBuilder.addOutcome(new Outcome(DefaultOutcomeId.of(outcome.outcome), Odds.of(outcome.value)));
@@ -42,52 +44,42 @@ public class MarketStepDef {
 	@When("we adjust key value to {string}")
 	public void we_adjust_key_value_to(String keyValue) {
 		Key newKey = Key.of(Integer.parseInt(keyValue));
-		market = market.withKeyFor(newKey);
+		market = market.withKeyFor(newKey, TypeKeysSpecifier.empty());
 	}
 
 	@Then("all odds should update to following values")
 	public void all_odds_should_update_to_following_values(List<OutcomeDto> outcomesDto) {
 		for(OutcomeDto outcomeDto : outcomesDto){
-			Set<Outcome> outcomes = market.getOutcomes().get(null);
+			Set<Outcome> outcomes = market.getOutcomes().get(TypeKeysSpecifier.empty());
 			Outcome outcomeById = outcomes.stream().filter(o -> Objects.equals(o.getOutcomeId().getValue(), outcomeDto.outcome)).findFirst().get();
 			assertThat(outcomeById.getOdds().getValue()).isEqualTo(outcomeDto.value);
 		}
 	}
 
-	@Given("we have multi line market with identifier {string}")
+	@Given("multi line market with identifier {string}")
 	public void we_have_multi_line_market_with_identifier(String marketIdentifier) {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+		multiLineBuilder = new MultiLine.Builder<>(MarketId.of(marketIdentifier));
 	}
 
-	@Given("we have following odds for outcomes for typeKey {string} for that market")
+	@Given("following odds for outcomes for typeKey {string} for that market")
 	public void we_have_following_odds_for_outcomes_for_typeKey_for_that_market(String typeKey, List<OutcomeDto> outcomes) {
-		// Write code here that turns the phrase above into concrete actions
-		// For automatic transformation, change DataTable to one of
-		// List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-		// Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-		// Double, Byte Short, Long, BigInteger or BigDecimal.
-		//
-		// For other transformations you can register a DataTableType.
-		throw new PendingException();
+		SingleLine.Builder<TypeKey> singleLineBuilder = new SingleLine.Builder<>(TypeKey.of(typeKey));
+		for(OutcomeDto outcome : outcomes){
+			singleLineBuilder.addOutcome(new Outcome(DefaultOutcomeId.of(outcome.outcome), Odds.of(outcome.value)));
+		}
+		multiLineBuilder.addLine(singleLineBuilder.build());
+		market = multiLineBuilder.build();	//will build each time there is new line, but will eventually have all lines?
 	}
 
 	@When("we adjust key value to {string} for typeKey {string} in that market")
 	public void we_adjust_key_value_to_for_typeKey_in_that_market(String keyValue, String typeKey) {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+		Key newKey = Key.of(Integer.parseInt(keyValue));
+		market = market.withKeyFor(newKey, TypeKeysSpecifier.of(TypeKey.of(typeKey)));
 	}
 
 	@Then("odds for typeKey {string} should be adjusted to following values")
 	public void odds_for_typeKey_should_be_adjusted_to_following_values(String typeKey, List<OutcomeDto> outcomes) {
-		// Write code here that turns the phrase above into concrete actions
-		// For automatic transformation, change DataTable to one of
-		// List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-		// Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-		// Double, Byte Short, Long, BigInteger or BigDecimal.
-		//
-		// For other transformations you can register a DataTableType.
-		throw new PendingException();
+		market.getOutcomes();
 	}
 
 	@Then("odds for other typeKey should be unchanged")

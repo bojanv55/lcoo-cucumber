@@ -26,14 +26,14 @@ public class SingleLine<T extends LineId> implements Line<T> {
 	}
 
 	@Override
-	public Map<LineId[], Set<Outcome>> getOutcomes() {
-		Map<LineId[], Set<Outcome>> lineIdsToOutcomes = new HashMap<>();
-		lineIdsToOutcomes.put(null, outcomes);	//parent caller of this (if any) will map this to proper type-key
+	public Map<TypeKeysSpecifier, Set<Outcome>> getOutcomes() {
+		Map<TypeKeysSpecifier, Set<Outcome>> lineIdsToOutcomes = new HashMap<>();
+		lineIdsToOutcomes.put(TypeKeysSpecifier.empty(), outcomes);
 		return lineIdsToOutcomes;
 	}
 
 	@Override
-	public Line<T> withKeyFor(Key newKey, TypeKey... typeKeySpecifier) {
+	public Line<T> withKeyFor(Key newKey, TypeKeysSpecifier specifier) {
 		Builder<T> builder = new Builder<>(lineId);
 		builder.setKey(newKey);
 		keyAdjustStrategy.applyKeyToOutcomes(newKey, outcomes).forEach(builder::addOutcome);
